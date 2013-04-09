@@ -1,0 +1,18 @@
+// -*- javascript -*-
+{
+  "name": "Yahoo to Google Change Event Publisher of Calendar",
+  "version": "0.01",
+  "manifest_version": 2,
+  "description": "Change Yahoo! Calendar Event Publisher to Google's one.",
+//  "browser_action": {
+//    "default_icon": "icon.png",
+//    "popup": "popup.html"
+//  },
+  "content_scripts": [
+    {
+      "matches": ["http://tv.yahoo.co.jp/program/*"],
+      "js": ["shortcut.js", "y2gcalep.js"]
+    }
+  ],
+  "permissions": []
+}
