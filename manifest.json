@@ -1,7 +1,7 @@
 // -*- javascript -*-
 {
   "name": "Yahoo to Google Change Event Publisher of Calendar",
-  "version": "0.01",
+  "version": "0.0.1",
   "manifest_version": 2,
   "description": "Change Yahoo! Calendar Event Publisher to Google's one.",
 //  "browser_action": {
