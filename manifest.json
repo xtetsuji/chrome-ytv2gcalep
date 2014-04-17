@@ -1,13 +1,15 @@
 // -*- javascript -*-
 {
-  "name": "Yahoo to Google Change Event Publisher of Calendar",
+  "name": "Yahoo!テレビの番組をGoogleカレンダーへ登録",
   "version": "0.0.1",
   "manifest_version": 2,
-  "description": "Change Yahoo! Calendar Event Publisher to Google's one.",
-//  "browser_action": {
-//    "default_icon": "icon.png",
-//    "popup": "popup.html"
-//  },
+  "description": "Yahoo!Japanテレビの番組詳細画面にある、Yahoo!カレンダーへの登録ボタンを、Googleカレンダーへの登録ボタンに書き換えます",
+  // "options_page": "option.html", // not yet...
+   "icons": {
+    "16" : "images/tv-16px.gif",
+    "48" : "images/tv-48px.gif",
+    "128" : "images/tv-128px.gif"
+  },
   "content_scripts": [
     {
       "matches": ["http://tv.yahoo.co.jp/program/*"],
