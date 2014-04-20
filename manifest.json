@@ -13,7 +13,8 @@
   "content_scripts": [
     {
       "matches": ["http://tv.yahoo.co.jp/program/*"],
-      "js": ["shortcut.js", "y2gcalep.js"]
+      //"js": ["shortcut.js", "ytv2gcalep.js"]
+      "js": ["ytv2gcalep.js"]
     }
   ],
   "permissions": []

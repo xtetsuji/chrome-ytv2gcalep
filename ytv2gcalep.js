@@ -1,5 +1,6 @@
 // OGATA Tetsuji
 // 2011/04/04
+// 2014/04/21
 // TODO: 非対応ページではそもそも実行しない
 //       検索結果のページの追加ボタン
 
@@ -18,8 +19,6 @@ for(i=0; i<a_els_len; i++){
 
     // a_el を引数にとって a_el.href を変更してもらうのもいいかも
         //mydt = a_el.parentNode.parentNode.getElementsByTagName("strong")[0].innerHTML.match(/\d\d:\d\d/g)[1];
-
-
 
     //mydt_match = document.getElementsByClassName("pt5p")[0].childNodes[0].innerText.match(/(\d?\d)時(\d?\d)分\D*$/); // TODO: ここのマッチが「新番組」「最終回」で失敗する "pt5p" が沢山あるから
     for(i=0;i<2;i++){ // ad-hoc...
