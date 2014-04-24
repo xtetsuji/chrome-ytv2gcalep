@@ -9,7 +9,7 @@ var a_els     = document.getElementsByTagName("a"),
     a_el,
     mydt, mydt_match,
     g_favicon, g_favicon_span,
-    shortcut  = getShortcut(),
+    //shortcut  = getShortcut(),
     i;
 
 for(i=0; i<a_els_len; i++){
