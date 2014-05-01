@@ -12,9 +12,9 @@ var a_els     = document.getElementsByTagName("a"),
     //shortcut  = getShortcut(),
     i;
 
-for(i=0; i<a_els_len; i++){
-    a_el=a_els[i];
-    if(!a_el.href.match(/^http:\/\/calendar\.yahoo\.co\.jp\//))
+for( i = 0; i < a_els_len; i++ ){
+    a_el = a_els[i];
+    if( !a_el.href.match(/^https?:\/\/calendar\.yahoo\.co\.jp\//) )
          continue;
 
     // a_el を引数にとって a_el.href を変更してもらうのもいいかも
@@ -71,8 +71,6 @@ function y2g_url(url, mydt){
         gparam_keys_len = gparam_keys.length,
         gqsarr = [],
         pair, i;
-
-    //qs = qs.replace(/&URL=.*/, ""); // 要らない? 2011/04/04 古い
 
     //console.log("y2g_url: qs="+UnescapeEUCJP(qs));
     //console.log("y2g_url: param_url="+UnescapeEUCJP(param_url));
@@ -133,7 +131,9 @@ function detect_gdates(st, mydt) {
     st_ = "".concat(st_1, "T", st_2); // YYYYMMDDTHHHMM
     //console.log("st_1="+st_1+" st_="+st_);
 
-    if(typeof st_ === "undefined"){throw new Error("undefined st_");}
+    if(typeof st_ === "undefined")
+        throw new Error("undefined st_");
+
     var date_st = str2date(st_);
     var time_st = date_st.getTime();
 
@@ -155,8 +155,8 @@ function detect_gdates(st, mydt) {
     var dt = cur_date+"T"+mydt_;
     
     // STの組み立てのコピペです…
-    var dtarr = dt.split("T");
-    var dt_1 = dtarr[0], dt_2 = dtarr[1];
+    var dtarr     = dt.split("T");
+    var dt_1      = dtarr[0], dt_2 = dtarr[1];
     var dt_2_hour = parseInt(dt_2.match(/^(\d\d)/)[1],10);
     //console.log("detect_gdates:(dt,mydt,dtarr,dt_1,dt_2,cur_date,dt_2_hour)",dt,mydt,dtarr,dt_1,dt_2,cur_date,dt_2_hour);
     if( dt_2_hour >= 24 ) { // 24時以降の翌日表現
@@ -173,7 +173,9 @@ function detect_gdates(st, mydt) {
     var dt_ = dt_1 + "T" + dt_2; // YYYYMMDDTHHHMM
     //console.log("dt_1="+dt_1+" dt_="+dt_);
 
-    if(typeof dt_ === "undefined"){throw new Error("undefined dt_");}
+    if( typeof dt_ === "undefined" )
+        throw new Error("undefined dt_");
+
     var date_dt = str2date(dt_);
     var time_dt = date_dt.getTime();
 
