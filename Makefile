@@ -25,6 +25,7 @@ prepare:
 build:
 	cd $(BUILD_ROOT_DIR) ; \
 	zip -r $(APP_NAME).zip $(APP_NAME)
+	@echo "Build success! Upload $(BUILD_ROOT_DIR)/$(APP_NAME).zip on Chroem developer console."
 
 copy-builddir:
 	echo $(BUILD_ROOT_DIR) | pbcopy
