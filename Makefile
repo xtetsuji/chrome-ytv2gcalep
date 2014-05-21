@@ -23,6 +23,8 @@ prepare:
 	$(DIR_OPEN_CMD) $(BUILD_DIR)/
 
 build:
+	@read -p "Update manifest.json version number?[y/N]: " bool ; \
+	if [[ $$bool =~ ^[yY](es)? ]] ; then true ; else false ; fi
 	cd $(BUILD_ROOT_DIR) ; \
 	zip -r $(APP_NAME).zip $(APP_NAME)
 	@echo "Build success! Upload $(BUILD_ROOT_DIR)/$(APP_NAME).zip on Chroem developer console."
