@@ -10,7 +10,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://tv.yahoo.co.jp/program/*"],
+      "matches": ["https://tv.yahoo.co.jp/program/*", "https://tv.yahoo.co.jp/program/*"],
       "js": ["ytv2gcalep.js"]
     }
   ],
