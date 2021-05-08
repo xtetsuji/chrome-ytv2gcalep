@@ -1,7 +1,7 @@
 {
   "name": "Yahoo!テレビの番組をGoogleカレンダーへ登録",
   "version": "0.0.2",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "description": "Yahoo!Japanテレビの番組詳細画面にある、Yahoo!カレンダーへの登録ボタンを、Googleカレンダーへの登録ボタンに書き換えます",
    "icons": {
     "16" : "images/tv-16px.gif",
@@ -10,8 +10,8 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://tv.yahoo.co.jp/program/*", "https://tv.yahoo.co.jp/program/*"],
-      "js": ["ytv2gcalep.js"]
+      "matches": ["https://tv.yahoo.co.jp/program/*"],
+      "js": ["GCalURL.js", "YTVProgramParser.js", "ytv2gcalep.js"]
     }
   ],
   "permissions": []
