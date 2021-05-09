@@ -12,7 +12,13 @@ for (const [key, value] of [['href', gCalURL], ['style', 'font-size: 72pt'], ['t
 }
 
 const infoNode = document.createElement('pre');
-infoNode.appendChild(document.createTextNode(ytvpp.getInformationText()));
+infoNode.appendChild(document.createTextNode(
+    ytvpp.getInformationText() + "\n" +
+    `${gCalURL} => length: ${gCalURL.length}
+ytvpp.description.length: ${ytvpp.description.length}
+encodeURIComponent(ytvpp.description).length: ${encodeURIComponent(ytvpp.description).length}
+`
+));
 
 function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -22,4 +28,4 @@ wait(2000).then( () => {
     console.log('append body', linkNode);
     document.body.appendChild(linkNode);
     document.body.appendChild(infoNode);
-})
+});
