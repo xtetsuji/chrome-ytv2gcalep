@@ -7,26 +7,34 @@ class YTVProgramParser {
         if( !d ) throw new Error("document is not found");
         this.document = d;
 
-        this.node.schedule = d.querySelector('#__next main article .inner .programTime .programTimeContainer .programTimeDetail .schedule');
-        this.node.schedule_between = this.node.schedule.querySelectorAll("time");
         this.parse_dates();
         this.parse_title();
         this.parse_description();
     }
     parse_dates() {
-        const between_texts = [this.start_text, this.end_text] =
-            Array.from(this.node.schedule_between).map(
-                node => node.getAttribute("datetime")
-            );
-        const between_dates = [this.start_date, this.end_date] =
-            between_texts.map( text => {
-                console.log(text, typeof text);
-                const [year, month, day, hour, min] =
-                    text.split(/[-: ]/).map(
-                        part => Number(part.replace(/^0+/, ''))
-                    );
-                return new Date(year, month - 1, day, hour, min);
-            } );
+        // <time> の datetime="YYYY-MM-DD HH:MM" は HH:MM 部分が午後だとおかしい、ただ YYYY-MM-DD は日付またぎも含めて信用できると思われる
+        // なので YYYY-MM-DD は time 要素の datetime 属性から拾い、HH:MM は表示要素の span の中から拾う
+        const [start_node, end_node] = document.querySelectorAll('.scheduleText');
+        const [start_dstr, end_dstr] = [
+            start_node,
+            end_node
+        ].map( (node) =>
+            node.getAttribute('datetime').replace(/ .*/, '')
+        );
+        const [start_tstr, end_tstr] = [
+            [start_node, 3],
+            [end_node, 1]
+        ].map( ([node, i]) =>
+            node.querySelector(`span:nth-child(${i})`).innerText
+        );
+        [this.start_date, this.end_date] = [
+            [start_dstr, start_tstr],
+            [end_dstr,   end_tstr]
+        ].map( ([dstr, tstr]) => {
+            const [hour, minute] = tstr.split(/:/);
+            const [year, month, day] = dstr.split(/-/);
+            return new Date(year, month - 1, day, hour, minute);
+        } );
     }
     parse_title() {
         this.title = this.document.querySelector(".programRatingContentTitle").innerText;
