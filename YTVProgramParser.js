@@ -47,4 +47,15 @@ class YTVProgramParser {
         });
         return gcalurl.getURL();
     }
+    getInformationText() {
+        return `Title: ${this.title}
+
+Details: ${this.description.replace(/(?<=\n)/g, '    ')}
+
+Location: ${this.location}
+
+Start: ${this.start_date.toString()}
+
+End: ${this.end_date.toString()}`
+    }
 }
