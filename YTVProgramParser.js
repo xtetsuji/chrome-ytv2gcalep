@@ -45,6 +45,31 @@ class YTVProgramParser {
     parse_location() { // テレビ局
         this.location = this.document.querySelectorAll(".channelText")[0].innerHTML.replace(/<.*/, '')
     }
+    // slice_description(number) {
+    //     this.description = `DUMMY(${new Date().toString()})` + this.description.slice(0, number);
+    // }
+    // limit_encoded_description_bytes(bytenum) {
+    //     let description = this.description;
+    //     if ( encodeURIComponent(description).length < bytenum ) return;
+    //     while ( encodeURIComponent(description).length >= bytenum ) {
+    //         description = description.slice(0, -1);
+    //     }
+    //     this.description = description;
+    //     console.log(`limitation work end`);
+    // }
+    slice_description_limit_GCalURL_bytes(bytenum) {
+        const excess_byte = this.getGcalURL().length - bytenum;
+        if ( excess_byte <= 0 ) return;
+        console.log("slice_description_limit_GCalURL_bytes working start, excess_bytes=" + excess_byte);
+        const getBytes = string => encodeURIComponent(string).length;
+        let description = this.description;
+        const original_description_byte = getBytes(description);
+        // 減量バイト数が超過バイト数を上回れば抜けてOK
+        while ( original_description_byte - getBytes(description) <= excess_byte ) {
+            description = description.slice(0, -1);
+        }
+        this.description = description;
+    }
     getGcalURL() {
         const gcalurl = new GCalURL({
             text: this.title,
