@@ -60,7 +60,7 @@ class YTVProgramParser {
     slice_description_limit_GCalURL_bytes(bytenum) {
         const excess_byte = this.getGcalURL().length - bytenum;
         if ( excess_byte <= 0 ) return;
-        console.log("slice_description_limit_GCalURL_bytes working start, excess_bytes=" + excess_byte);
+        console.log(`slice_description_limit_GCalURL_bytes: bytenum=${bytenum}, but GCalURL_length=${this.getGcalURL().length}. start ${excess_byte} bytes diet. current description length is ${this.description.length}`);
         const getBytes = string => encodeURIComponent(string).length;
         let description = this.description;
         const original_description_byte = getBytes(description);
@@ -68,6 +68,7 @@ class YTVProgramParser {
         while ( original_description_byte - getBytes(description) <= excess_byte ) {
             description = description.slice(0, -1);
         }
+        console.log(`diet end. dieted description length is ${description.length}`);
         this.description = description;
     }
     getGcalURL() {
