@@ -16,9 +16,15 @@ ytvpp.slice_description_limit_GCalURL_bytes(8195);
 const gCalURL = ytvpp.getGcalURL();
 console.log(ytvpp.gCalURL);
 
+const iconNode = document.createElement('img');
+//iconNode.setAttribute('src', chrome.runtime.getURL('google_calendar.png'));
+iconNode.setAttribute('src', 'https://play-lh.googleusercontent.com/Jsbb0EeesKUbDTl3UyDKO6sNz45RCMh7gnoI6giQcQz1f5Mj0J4TRh7Psyu53vShh-qm=s180-rw');
+iconNode.setAttribute('width', '35');
+iconNode.setAttribute('height', '35');
 const linkNode = document.createElement('a');
-linkNode.appendChild(document.createTextNode('🗓'));
-for (const [key, value] of [['href', gCalURL], ['style', 'font-size: 72pt'], ['target', '_blank']]) {
+//linkNode.appendChild(document.createTextNode('🗓'));
+linkNode.appendChild(iconNode);
+for (const [key, value] of [['href', gCalURL], ['style', 'font-size: 1em'], ['target', '_blank'], ['class', 'buttonSnsLink'], ['title', 'Googleカレンダーに放送予定を追加する']]) {
     linkNode.setAttribute(key, value);
 }
 
@@ -31,12 +37,15 @@ encodeURIComponent(ytvpp.description).length: ${encodeURIComponent(ytvpp.descrip
 `
 ));
 
-function wait(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+//const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-wait(2000).then( () => {
-    console.log('append body', linkNode);
+//wait(10).then( () => {
+    //console.log('append body', linkNode);
     document.body.appendChild(linkNode);
     document.body.appendChild(infoNode);
-});
+//    wait(20).then( () => {
+        //console.log('append snsContainer', linkNode);
+        const snsContainer = document.querySelector(".buttonSnsContainer");
+        snsContainer.appendChild(linkNode);
+//    });
+//} );
