@@ -1,5 +1,6 @@
 'use strict';
 const ytvpp = new YTVProgramParser();
+ytvpp.url = location.href;
 ytvpp.parse(document);
 ytvpp.parseND();
 console.log(ytvpp);

@@ -1,6 +1,7 @@
 class YTVProgramParser {
     constructor() {
         this.node = {};
+        this.url  = undefined;
     }
     parse(d) {
         if( !d && typeof document !== 'undefined' ) d = document;
@@ -45,6 +46,9 @@ class YTVProgramParser {
         // 最終更新日を入れる？
         const descriptionText = JSON.parse(data['descriptions']).map( obj => `■${obj['title']}\n\n${obj['note']}` ).join("\n\n\n");
         this.description2 = [data['title'], data['summary'], descriptionText].join("\n\n");
+        if ( this.url ) {
+            this.description2 = this.url + "\n\n" + this.description2;
+        }
     }
     swap2to1() {
         for ( const key of ['start_date', 'end_date', 'title', 'location', 'description'] ) {
