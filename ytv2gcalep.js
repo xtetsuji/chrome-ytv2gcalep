@@ -1,8 +1,9 @@
 'use strict';
 const ytvpp = new YTVProgramParser();
 ytvpp.parse(document);
+ytvpp.parseND();
 console.log(ytvpp);
-
+ytvpp.swap2to1();
 // URL 全体で 8192文字（8191 OK / 8192 NG）制限？
 // URL 全体で
 // 8195 OK
@@ -34,7 +35,10 @@ infoNode.appendChild(document.createTextNode(
     `${gCalURL} => length: ${gCalURL.length}
 ytvpp.description.length: ${ytvpp.description.length}
 encodeURIComponent(ytvpp.description).length: ${encodeURIComponent(ytvpp.description).length}
-`
+
+------
+
+` + ytvpp.getInformationText2()
 ));
 
 //const wait = ms => new Promise(resolve => setTimeout(resolve, ms));

@@ -9,8 +9,59 @@ class YTVProgramParser {
 
         this.parse_dates();
         this.parse_title();
+        this.parse_location();
         this.parse_description();
     }
+    /**
+     * 現在のページではなく引数URLのパースを行う
+     * @param {string} url - https://tv.yahoo.co.jp/program/数字 の URL
+     * @return {Promise} - resolve として parse 完了を教えてくれる Promise
+     */
+    async parseURL(url) {
+        const res  = await fetch(url);
+        // DOMParser は noscript を解釈しない（？）ようで、<noscript><iframe></noscript>  ... <noscript></iframe></noscript> で iframe に包まれてしまい、がっぽり見たい情報がはずされてしまう対策
+        const text = await res.text().then( text => text.replace(/<noscript>.*?<\/noscript>/g, '') );
+        this.document = new DOMParser().parseFromString(text, 'text/html');
+        this.parseND();
+    }
+    parseND() {
+        const nd = this.nd = JSON.parse(this.document.getElementById('__NEXT_DATA__').innerText);
+        console.log(`nd=`, nd);
+        this.nd = nd;
+        const masterData = nd['props']['initialState']['mindsMaster']['data']['ResultSet']['Result'];
+        //const mindsAll = nd['props']['initialState']['mindsAll']['data']['ResultSet']['Result'];
+        const data = masterData[0]; // どちらが正しい？
+        // date
+        this.start_date2 = new Date(data['broadCastStartDate'] * 1000);
+        this.end_date2   = new Date(data['broadCastEndDate'] * 1000);
+
+        // title
+        this.title2 = data['programTitle'];
+
+        // location
+        this.location2 = data['serviceName'];
+
+        // description
+        // 最終更新日を入れる？
+        const descriptionText = JSON.parse(data['descriptions']).map( obj => `■${obj['title']}\n\n${obj['note']}` ).join("\n\n\n");
+        this.description2 = [data['title'], data['summary'], descriptionText].join("\n\n");
+    }
+    swap2to1() {
+        for ( const key of ['start_date', 'end_date', 'title', 'location', 'description'] ) {
+            const key2 = key+'2';
+            [this[key], this[key2]] = [this[key2], this[key]];
+        }
+    }
+    // getDocument(arg) {
+    //     if ( typeof arg === 'undefined' ) {
+    //         arg = document;
+    //     }
+    //     if ( arg instanceof HTMLDocument ) {
+    //         return arg;
+    //     } else if ( typeof arg === 'string' && arg.match(/^https?:\/\//) ) {
+    //         return new DOMParser().parseFromString()
+    //     }
+    // }
     parse_dates() {
         // <time> の datetime="YYYY-MM-DD HH:MM" は HH:MM 部分が午後だとおかしい、ただ YYYY-MM-DD は日付またぎも含めて信用できると思われる
         // なので YYYY-MM-DD は time 要素の datetime 属性から拾い、HH:MM は表示要素の span の中から拾う
@@ -91,5 +142,17 @@ Location: ${this.location}
 Start: ${this.start_date.toString()}
 
 End: ${this.end_date.toString()}`
+    }
+    getInformationText2() {
+        return `Title2: ${this.title2}
+
+Details2: ${this.description2.replace(/(?<=\n)/g, '    ')}
+
+Location2: ${this.location2}
+
+Start2: ${this.start_date2.toString()}
+
+End2: ${this.end_date2.toString()}`
+
     }
 }
