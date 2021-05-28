@@ -1,9 +1,11 @@
 {
+  "manifest_version": 3,
   "name": "Yahoo!テレビの番組をGoogleカレンダーへ登録",
   "version": "0.0.2",
-  "manifest_version": 3,
+
+  "author": "OGATA Tetsuji",
   "description": "Yahoo!Japanテレビの番組詳細画面にある、Yahoo!カレンダーへの登録ボタンを、Googleカレンダーへの登録ボタンに書き換えます",
-   "icons": {
+  "icons": {
     "16" : "images/tv-16px.gif",
     "48" : "images/tv-48px.gif",
     "128" : "images/tv-128px.gif"
