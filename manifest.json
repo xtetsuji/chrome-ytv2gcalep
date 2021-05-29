@@ -17,7 +17,7 @@
     },
     {
       "matches": ["https://tv.yahoo.co.jp/listings*"],
-      "js": ["GCalURL.js", "YTVProgramParser.js", "listing.js"]
+      "js": ["GCalURL.js", "YTVProgramParser.js", "listings.js"]
     }
   ],
   "permissions": []
