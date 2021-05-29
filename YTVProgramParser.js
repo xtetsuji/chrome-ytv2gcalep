@@ -22,8 +22,8 @@ class YTVProgramParser {
         const res  = await fetch(url);
         // DOMParser は noscript を解釈しない（？）ようで、<noscript><iframe></noscript>  ... <noscript></iframe></noscript> で iframe に包まれてしまい、がっぽり見たい情報がはずされてしまう対策
         const text = await res.text().then( text => text.replace(/<noscript>.*?<\/noscript>/g, '') );
-        this.document = new DOMParser().parseFromString(text, 'text/html');
-        this.parseND();
+        const document = new DOMParser().parseFromString(text, 'text/html');
+        this.parseND(document);
     }
     parseND(document) {
         console.log('parseND: start');
