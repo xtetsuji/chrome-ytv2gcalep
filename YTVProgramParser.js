@@ -3,11 +3,9 @@ class YTVProgramParser {
         this.node = {};
         this.url  = undefined;
     }
-    parse(d) {
-        if( !d && typeof document !== 'undefined' ) d = document;
-        if( !d ) throw new Error("document is not found");
-        this.document = d;
-
+    parseDOM(document) {
+        if( !document ) throw new Error("parseDOM: document is not found");
+        this.document = document;
         this.parse_dates();
         this.parse_title();
         this.parse_location();
