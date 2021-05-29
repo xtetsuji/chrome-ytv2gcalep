@@ -13,7 +13,7 @@
   "content_scripts": [
     {
       "matches": ["https://tv.yahoo.co.jp/program/*"],
-      "js": ["GCalURL.js", "YTVProgramParser.js", "ytv2gcalep.js"]
+      "js": ["GCalURL.js", "YTVProgramParser.js", "program.js"]
     },
     {
       "matches": ["https://tv.yahoo.co.jp/listings*"],
