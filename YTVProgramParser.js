@@ -25,7 +25,12 @@ class YTVProgramParser {
         this.document = new DOMParser().parseFromString(text, 'text/html');
         this.parseND();
     }
-    parseND() {
+    parseND(document) {
+        console.log('parseND: start');
+        if ( !document ) {
+            throw new Error('parseND: document is not found as 1st argument');
+        }
+        this.document = document;
         const nd = this.nd = JSON.parse(this.document.getElementById('__NEXT_DATA__').innerText);
         console.log(`nd=`, nd);
         this.nd = nd;

@@ -2,7 +2,7 @@
 const ytvpp = new YTVProgramParser();
 ytvpp.url = location.href;
 ytvpp.parse(document);
-ytvpp.parseND();
+ytvpp.parseND(document);
 console.log(ytvpp);
 ytvpp.swap2to1();
 // URL 全体で 8192文字（8191 OK / 8192 NG）制限？
