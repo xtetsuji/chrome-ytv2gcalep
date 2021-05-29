@@ -14,7 +14,6 @@ const programAddButonnHandler = async function(event) {
     const url    = link.href;
     console.log(`button: programURL = ${url}`);
     const ytvpp  = new YTVProgramParser();
-    ytvpp.url    = url;
     await ytvpp.parseURL(url).catch( (e) => {
         console.error(
             `listing: ytvpp.parseURL failed: ytvpp.document =`,
