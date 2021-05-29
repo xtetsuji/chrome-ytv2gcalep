@@ -39,27 +39,21 @@ class YTVProgramParser {
         //const mindsAll = nd['props']['initialState']['mindsAll']['data']['ResultSet']['Result'];
         const data = masterData[0]; // どちらが正しい？
         // date
-        this.start_date2 = new Date(data['broadCastStartDate'] * 1000);
-        this.end_date2   = new Date(data['broadCastEndDate'] * 1000);
+        this.start_date = new Date(data['broadCastStartDate'] * 1000);
+        this.end_date   = new Date(data['broadCastEndDate'] * 1000);
 
         // title
         this.title2 = data['programTitle'];
 
         // location
-        this.location2 = data['serviceName'];
+        this.location = data['serviceName'];
 
         // description
         // 最終更新日を入れる？
         const descriptionText = JSON.parse(data['descriptions']).map( obj => `■${obj['title']}\n\n${obj['note']}` ).join("\n\n\n");
-        this.description2 = [data['title'], data['summary'], descriptionText].join("\n\n");
+        this.description = [data['title'], data['summary'], descriptionText].join("\n\n");
         if ( this.url ) {
-            this.description2 = this.url + "\n\n" + this.description2;
-        }
-    }
-    swap2to1() {
-        for ( const key of ['start_date', 'end_date', 'title', 'location', 'description'] ) {
-            const key2 = key+'2';
-            [this[key], this[key2]] = [this[key2], this[key]];
+            this.description = this.url + "\n\n" + this.description;
         }
     }
     // getDocument(arg) {
@@ -152,17 +146,5 @@ Location: ${this.location}
 Start: ${this.start_date.toString()}
 
 End: ${this.end_date.toString()}`
-    }
-    getInformationText2() {
-        return `Title2: ${this.title2}
-
-Details2: ${this.description2.replace(/(?<=\n)/g, '    ')}
-
-Location2: ${this.location2}
-
-Start2: ${this.start_date2.toString()}
-
-End2: ${this.end_date2.toString()}`
-
     }
 }

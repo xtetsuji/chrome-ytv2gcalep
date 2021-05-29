@@ -22,7 +22,6 @@ const programAddButonnHandler = async function(event) {
         throw e;
     } );
     console.log(`ytvpp: `, ytvpp);
-    ytvpp.swap2to1(); // ちょっとこのインターフェースは直そう
     ytvpp.slice_description_limit_GCalURL_bytes(8195);
     const gCalURL = ytvpp.getGcalURL();
     console.log(`button: gCalURL=${ytvpp.gCalURL}`);

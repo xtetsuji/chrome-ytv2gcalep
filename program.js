@@ -1,10 +1,8 @@
 'use strict';
 const ytvpp = new YTVProgramParser();
 ytvpp.url = location.href;
-ytvpp.parseDOM(document);
 ytvpp.parseND(document);
 console.log(ytvpp);
-ytvpp.swap2to1();
 // URL 全体で 8192文字（8191 OK / 8192 NG）制限？
 // URL 全体で
 // 8195 OK
@@ -12,11 +10,17 @@ ytvpp.swap2to1();
 // const limit_byte_num = 7988;
 // console.log(`limitation encoded description to ${limit_byte_num} bytes`);
 // ytvpp.limit_encoded_description_bytes(limit_byte_num);
-
 ytvpp.slice_description_limit_GCalURL_bytes(8195);
 
 const gCalURL = ytvpp.getGcalURL();
 console.log(ytvpp.gCalURL);
+
+// DOM版：デバッグ用
+const ytvppDOM = new YTVProgramParser();
+ytvppDOM.url = location.url;
+ytvppDOM.parseDOM(document);
+//console.log(ytvppDOM);
+const gCalURLDOM = ytvppDOM.getGcalURL();
 
 const iconNode = document.createElement('img');
 //iconNode.setAttribute('src', chrome.runtime.getURL('google_calendar.png'));
@@ -31,15 +35,21 @@ for (const [key, value] of [['href', gCalURL], ['style', 'font-size: 1em'], ['ta
 }
 
 const infoNode = document.createElement('pre');
-infoNode.appendChild(document.createTextNode(
-    ytvpp.getInformationText() + "\n" +
-    `${gCalURL} => length: ${gCalURL.length}
+infoNode.appendChild(document.createTextNode(`
+ytvpp(as ND):
+${ytvpp.getInformationText()}
+${gCalURL} => length: ${gCalURL.length}
 ytvpp.description.length: ${ytvpp.description.length}
 encodeURIComponent(ytvpp.description).length: ${encodeURIComponent(ytvpp.description).length}
 
 ------
 
-` + ytvpp.getInformationText2()
+ytvpp(as DOM):
+${ytvppDOM.getInformationText()}
+${gCalURLDOM} => length: ${gCalURLDOM.length}
+ytvpp.description.length: ${ytvppDOM.description.length}
+encodeURIComponent(ytvpp.description).length: ${encodeURIComponent(ytvppDOM.description).length}
+`
 ));
 
 //const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
