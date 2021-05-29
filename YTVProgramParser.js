@@ -1,8 +1,15 @@
+/**
+ * Yahoo! TV の番組表を解析するクラス
+ */
 class YTVProgramParser {
     constructor() {
-        this.node = {};
+        /** @member {string|undefined} */
         this.url  = undefined;
     }
+    /**
+     * 引数の Document オブジェクトのパースを行う
+     * @param {HTMLDocument} document オブジェクト
+     */
     parseDOM(document) {
         if( !document ) throw new Error("parseDOM: document is not found");
         this.document = document;
@@ -13,6 +20,7 @@ class YTVProgramParser {
     }
     /**
      * 現在のページではなく引数URLのパースを行う
+     * 引数 URL を fetch してきた後、parseND メソッドでパースしている
      * @param {string} url - https://tv.yahoo.co.jp/program/数字 の URL
      * @return {Promise} - resolve として parse 完了を教えてくれる Promise
      */
@@ -26,6 +34,12 @@ class YTVProgramParser {
         }
         this.parseND(document);
     }
+    /**
+     * Document または Document ライクなオブジェクトを取得して解析をする。
+     * Document ライクなオブジェクトは getElementById メソッドを持っていることが期待される。
+     * Document の実体である HTML 中に id="\_\_NEXT_DATA\_\_" を持つ script 要素があり、その中身の JSON を取得しようとする。
+     * @param {HTMLDocument} document - Document または Document ライクなオブジェクト
+     */
     parseND(document) {
         console.log('parseND: start');
         if ( !document ) {
@@ -112,6 +126,11 @@ class YTVProgramParser {
     //     this.description = description;
     //     console.log(`limitation work end`);
     // }
+    /**
+     * Google Calendar URL が指定バイト数に収まるよう、指定バイト数を超過する場合はdescription を切り詰める。
+     * 必要であれば description プロパティは破壊される。
+     * @param {number} bytenum - URLとして許容できる最大バイト数
+     */
     slice_description_limit_GCalURL_bytes(bytenum) {
         const excess_byte = this.getGcalURL().length - bytenum;
         if ( excess_byte <= 0 ) return;
@@ -126,6 +145,10 @@ class YTVProgramParser {
         console.log(`diet end. dieted description length is ${description.length}`);
         this.description = description;
     }
+    /**
+     * オブジェクト情報から Google Calendar Event Publisher の URL を生成する
+     * @returns {string} - Google Calendar の URL
+     */
     getGcalURL() {
         const gcalurl = new GCalURL({
             text: this.title,
@@ -136,6 +159,10 @@ class YTVProgramParser {
         });
         return gcalurl.getURL();
     }
+    /**
+     * デバッグ用としてオブジェクトの情報を文字列で取得する
+     * @returns {stringe} - デバッグ情報
+     */
     getInformationText() {
         return `Title: ${this.title}
 
