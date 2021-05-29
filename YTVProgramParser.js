@@ -43,7 +43,7 @@ class YTVProgramParser {
         this.end_date   = new Date(data['broadCastEndDate'] * 1000);
 
         // title
-        this.title2 = data['programTitle'];
+        this.title = data['programTitle'] || data['title'];
 
         // location
         this.location = data['serviceName'];
